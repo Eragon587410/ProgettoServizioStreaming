@@ -2,6 +2,8 @@ from flask import Flask
 import sqlalchemy
 
 app = Flask(__name__)
+from . import auth
+app.register_blueprint(auth.bp)
 
 @app.route("/")
 def homepage():
