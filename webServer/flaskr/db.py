@@ -1,6 +1,7 @@
 from sqlalchemy import create_engine, text
 from flask import current_app, g
 
+
 engine = create_engine("sqlite+pysqlite:///:memory:", echo=True)
 
 
@@ -11,7 +12,7 @@ def get_db():
         g.commit()
     return g.db
     
-get_db()
+
 
 def close_db():
     if getattr(g, "db"):
@@ -19,5 +20,7 @@ def close_db():
 
 
 def init_app(app):
-    app.teardown_appcontext(close_db)
+    pass
+    #app.teardown_appcontext(close_db)
+    #get_db()
     #app.cli.add_command(get_db)
