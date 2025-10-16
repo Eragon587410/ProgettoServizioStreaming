@@ -29,14 +29,19 @@ def login():
         db = get_db()
         username = request.form['username']
         password = request.form['password']
-        result = db.execute(text("SELECT * FROM users WHERE name = :username AND password = :password"), {"username" : username, "password" : password})
+        result = db.execute(text("SELECT * FROM users WHERE name = :username AND password = :password"), {"username" : username, "password" : password}).first()
         if result:
-            out = "sei loggato!"
-            session['user'] = result['username']
+            out = redirect(url_for('films'))
+            session['user'] = result[0]
         else:
             out = "credenziali errate"
     else:
         out = render_template('auth/login.html')
     return out
+
+@bp.route('/logout')
+def logout():
+    session.clear()
+    return redirect(url_for('auth.login'))
 
 

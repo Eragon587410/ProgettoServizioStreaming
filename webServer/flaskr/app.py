@@ -1,10 +1,12 @@
-from flask import Flask, session, redirect, url_for
+from functools import wraps
+from flask import Flask, render_template, session, redirect, url_for, g
 import sqlalchemy
 import db
 import auth
 
 
 app = Flask(__name__)
+app.secret_key = "DEV"
 
 app.register_blueprint(auth.bp)
 
@@ -12,9 +14,10 @@ db.init_app(app)
 
 
 def login_required(func):
+    @wraps(func)  #mantiene il nome, il docstring e l’endpoint della funzione originale. Senza questo, Flask registra wrapper invece di films, e non funziona il redirect.
     def wrapper():
         out = None
-        if session.get("user"):
+        if g.user:
             out = func()
         else:
             out = redirect(url_for('auth.login'))
@@ -26,8 +29,15 @@ def homepage():
     return "Hello Arsen"
 
 
-@app.route("/nicola")
+@app.route("/films")
 @login_required
-def hallo():
-    return "name"
+def films():
+    return render_template('base.html')
 
+
+@app.before_request
+def load_user():
+    if session.get("user"):
+        g.user = session['user']
+    else:
+        g.user = None
