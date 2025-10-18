@@ -1,0 +1,1 @@
+docker run --name testDB -e MYSQL_ROOT_PASSWORD=root -e MYSQL_DATABASE=streaming -p 3306:3306 -d mysql:8
