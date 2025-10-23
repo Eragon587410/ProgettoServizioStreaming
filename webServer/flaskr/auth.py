@@ -1,7 +1,7 @@
 from flask import (
     Blueprint, flash, g, redirect, render_template, request, session, url_for,
 )
-from db import get_db
+from db import get_db, password_hash
 from sqlalchemy import text
 
 bp = Blueprint('auth', __name__, url_prefix='/auth')
@@ -14,7 +14,7 @@ def register():
         db = get_db()
         username = request.form['username']
         password = request.form['password']
-        db.execute(text("INSERT INTO users (name, password) VALUES (:name, :password)"), {"name" : username, "password": password})
+        db.execute(text("INSERT INTO users (name, password) VALUES (:name, :password)"), {"name" : username, "password": password_hash(password)})
         db.commit()
         out = redirect(url_for('auth.login'))
         
@@ -29,7 +29,7 @@ def login():
         db = get_db()
         username = request.form['username']
         password = request.form['password']
-        result = db.execute(text("SELECT * FROM users WHERE name = :username AND password = :password"), {"username" : username, "password" : password}).first()
+        result = db.execute(text("SELECT * FROM users WHERE name = :username AND password = :password"), {"username" : username, "password" : password_hash(password)}).first()
         if result:
             out = redirect(url_for('films'))
             session['user'] = result[0]

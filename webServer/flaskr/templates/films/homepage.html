@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %}Login{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+    {% for film in g.films %}
+        <p>titolo: {{ film["title"] }} genere: {{ film["type"] }} descrizione: {{ film["description"] }}</p>
+    {% endfor %}
+{% endblock %}
