@@ -8,6 +8,7 @@ import auth
 app = Flask(__name__)
 app.secret_key = "DEV"
 
+#test
 app.register_blueprint(auth.bp)
 
 db.init_app(app)
