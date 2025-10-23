@@ -33,7 +33,7 @@ def homepage():
 @app.route("/films")
 @login_required
 def films():
-    return render_template('base.html')
+    return render_template('films/homepage.html')
 
 
 @app.before_request
@@ -42,3 +42,9 @@ def load_user():
         g.user = session['user']
     else:
         g.user = None
+
+@app.before_request
+def load_films():
+    db.get_films()
+    if session.get("films"):
+        g.films = session['films']
