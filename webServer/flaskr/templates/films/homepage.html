@@ -7,6 +7,6 @@
 {% block content %}
     {% for film in g.films %}
         <p>titolo: {{ film["title"] }} genere: {{ film["type"] }} descrizione: {{ film["description"] }}</p>
-        <img src="{{ film['image'] }}">
+        <img src="{{ film['image'] }}" width="300" height="200">
     {% endfor %}
 {% endblock %}
