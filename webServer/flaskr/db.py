@@ -4,7 +4,7 @@ import hashlib
 
 
 #engine = create_engine("sqlite:///mydatabase.db", echo=True)
-engine = create_engine("mysql+pymysql://root:root@localhost:3306/streaming", echo=True)
+engine = create_engine("mysql+pymysql://root:root@host.docker.internal:3306/streaming", echo=True)
 
 
 def get_db():
