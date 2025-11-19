@@ -25,11 +25,11 @@ def close_db():
         g.db.close()
 
 def get_films():
-    with get_db() as db:
-        result = db.execute(text("SELECT * FROM films")).all()
-        session["films"] = []
-        for film in result:
-            session["films"].append({"title": film[0], "type" : film[1], "description" : film[2], "image" : film[3]})
+    db = get_db()
+    result = db.execute(text("SELECT * FROM films")).all()
+    session["films"] = []
+    for film in result:
+        session["films"].append({"title": film[0], "type" : film[1], "description" : film[2], "image" : film[3]})
 
 
 def init_app(app):
