@@ -48,3 +48,7 @@ def load_films():
     db.get_films()
     if session.get("films"):
         g.films = session['films']
+
+@app.route("/film/<film_id>") #<int:film_id>
+def play_film(film_id):
+    return film_id
