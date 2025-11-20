@@ -1,0 +1,1 @@
+docker run --name streaming -it debian:latest
