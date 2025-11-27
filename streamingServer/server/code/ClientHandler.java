@@ -1,3 +1,4 @@
+
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.File;
@@ -29,7 +30,7 @@ public class ClientHandler extends Thread {
             // File file = new File("film/"+film);
             bos.write(message.getBytes(), 0, message.getBytes().length); 
             bos.flush();
-            socket.shutdownOutput(); //  IMPORTANTE
+            socket.shutdownOutput(); //IMPORTANTE
             socket.close(); 
             //FileInputStream fis = new FileInputStream(file);
             //int read;

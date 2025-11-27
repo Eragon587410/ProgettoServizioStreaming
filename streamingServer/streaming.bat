@@ -1,1 +1,1 @@
-docker run --name streaming -it debian:latest
+docker run -it --rm --name streaming -v "%cd%\server:/app" -p 2160:2160 -w /app/code  mcr.microsoft.com/openjdk/jdk:17-ubuntu bash -c "apt update && apt install -y ffmpeg && javac *.java && java Server"
