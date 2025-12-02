@@ -1,21 +1,32 @@
 @import url('https://fonts.googleapis.com/css?family=Merriweather');
-html { font-family: sans-serif; background: #242752; } /*  padding: 1rem; display: flex;justify-content: center; margin-top: auto;*/
+html { font-family: sans-serif; background: #242752; }
 
+/*distacco dai bordi della parte inserimento dati*/
 body {margin: 0; padding: 0;}
 
-
+/*stile scritta login*/
 h1 ul {font-family: "Merriweather","fantasy";color: #221246;} 
-h1 ul {background-color: azure;border:none; display:flex; align-items:center}
+h1 ul {border:none; display:flex; align-items:center}
+
+/*distacco dai bordi della barra superiore*/
 nav {margin:10px;}
-nav { background: lightgray; display: flex; align-items: center; padding: 0 0.5rem; }
+
+/*barra superiore di scelta log in log out*/
+nav { background: #f5f5dc; display: flex; align-items: center; padding: 0 0.5rem; border-radius: 10px;}
 nav h1 { flex: auto; margin: 0; }
 
-.content > header { border-bottom: 1px solid lightgray; display: flex; align-items: flex-end; }
-.content > header h1 { flex: auto; margin: 1rem 0 0.25rem 0; }
+/*riga separazione titolo login e insermento dati*/
+.content > header { border-bottom: 4px solid lightgray; display: flex; align-items: flex-end; }
+.content > header h1 { flex: auto; }
 
-
-li {padding: 0.5rem 1rem;background-color: #1e7a12;text-decoration: none;}
+/*bottoni*/
+li {padding: 0.5rem 1rem;background-color: #050202;text-decoration: none;border-radius: 5px;}
+li {margin-bottom: 10px;}
 ul {list-style-type: none;}
+
+/*spazio tra la scritta login*/
+h1 {margin-left:20px;}
+
 
 
 
@@ -45,3 +56,9 @@ nav ul  { display: flex; list-style: none; margin: 0; padding: 0; }  */
 .content textarea { min-height: 12em; resize: vertical; } */
 /* input.danger { color: #cc2f2e; }
 input[type=submit] { align-self: start; min-width: 10em; } */
+
+
+
+
+
+
