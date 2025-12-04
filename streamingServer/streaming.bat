@@ -1,1 +1,1 @@
-docker run -it --rm --name streaming -v "%cd%\server:/app" -p 2160:2160 -w /app/code  mcr.microsoft.com/openjdk/jdk:17-ubuntu bash -c "apt update && apt install -y ffmpeg && javac *.java && java Server"
+docker run -it --rm --name streaming -v "%cd%\server:/app" -p 2160:2160 -w /app/code  mcr.microsoft.com/openjdk/jdk:17-ubuntu bash -c "apt update && javac *.java && java Server"

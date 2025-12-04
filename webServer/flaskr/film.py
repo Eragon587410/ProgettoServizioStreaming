@@ -1,20 +1,32 @@
 import socket
+import subprocess
+import threading
 
 sk = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
-sk.connect(("localhost", 2160))
+ffmpeg = subprocess.Popen(
+        [
+            "ffmpeg",
+            "-loglevel", "quiet",
+            "-i", "pipe:0",         # input da stdin
+            "-c:v", "copy",         # non ricodifica (usiamo il codec originale)
+            "-f", "mpegts",         # container streamabile
+            "pipe:1"                # output su stdout
+        ],
+        stdin=subprocess.PIPE,
+        stdout=subprocess.PIPE
+    )
+
+sk.connect(("host.docker.internal", 2160))
 sk.sendall("test.txt\n".encode())
 
 
-message = None
+
 while True:
-    buffer = sk.recv(4096)
-    if not buffer:
+    chunk = sk.recv(4096)
+    if not chunk:
         break
-    if message:
-        message = message + buffer
-    else:
-        message = buffer
-print(message.decode())
+    ffmpeg.stdin.write(chunk)
+ffmpeg.stdin.close()
 
 #test

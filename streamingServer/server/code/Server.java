@@ -14,6 +14,7 @@ public class Server {
         try{
             sSocket = new ServerSocket(port);
             while (true){
+                System.out.println("in attesa");
                 Socket sk = sSocket.accept();
                 ClientHandler handler = new ClientHandler(sk);
                 handler.start();

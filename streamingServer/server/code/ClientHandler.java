@@ -26,20 +26,21 @@ public class ClientHandler extends Thread {
             Scanner in = new Scanner(bis);
             String message = in.nextLine();
             System.out.println(message);
+            buffer = new byte[4096];
             film = message;
-            // File file = new File("film/"+film);
-            bos.write(message.getBytes(), 0, message.getBytes().length); 
-            bos.flush();
-            socket.shutdownOutput(); //IMPORTANTE
-            socket.close(); 
-            //FileInputStream fis = new FileInputStream(file);
-            //int read;
-
-            //while ((read = fis.read(buffer)) != -1){
-            //    bos.write(buffer, 0, read);
-            //}
+            File file = new File("film/esempio.h264");
+            //bos.write(message.getBytes(), 0, message.getBytes().length); 
             //bos.flush();
-            //fis.close();
+            //socket.shutdownOutput(); //IMPORTANTE
+            //socket.close(); 
+            FileInputStream fis = new FileInputStream(file);
+            int read;
+
+            while ((read = fis.read(buffer)) != -1){
+                bos.write(buffer, 0, read);
+            }
+            bos.flush();
+            fis.close();
             
         } catch (Exception a){
             System.err.println(a);
