@@ -1,0 +1,59 @@
+/* Contenitore centrato */
+.content {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* centra orizzontalmente */
+    margin-top: 40px;
+    gap: 20px; /* distanza tra gli elementi */
+}
+
+/* Titolo Log In */
+.content > header h1 {
+    font-size: 32px;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 30px;
+    color: #111;
+}
+
+/* Campi input (username, password ecc.) */
+form input[type="text"],
+form input[id="username"],
+form input[type="password"] {
+    width: 320px;
+    padding: 18px;
+    border: none;
+    background: #e8e8ed;
+    border-radius: 14px;
+    font-size: 16px;
+    margin-bottom: 15px;
+    outline: none;
+    display: block; /* assicurati che siano uno sopra l'altro */
+}
+
+/* Pulsante arancione */
+form input[type="submit"] {
+    width: 320px;
+    padding: 18px;
+    font-size: 18px;
+    background: #ff8a44;
+    color: white;
+    border: none;
+    border-radius: 14px;
+    font-weight: 600;
+}
+
+/* Link Register o altri pulsanti */
+form a,
+form button {
+    width: 320px;
+    padding: 14px;
+    text-align: center;
+    background: #f0f0f5;
+    border-radius: 14px;
+    display: block;
+    margin-bottom: 15px; /* distanza dagli altri */
+    text-decoration: none;
+    color: #111;
+    font-weight: 500;
+}

@@ -5,8 +5,9 @@ html { font-family: sans-serif; background: #242752; }
 body {margin: 0; padding: 0;}
 
 /*stile scritta login*/
-h1 ul {font-family: "Merriweather","fantasy";color: #221246;} 
+h1 ul {font-family: "Merriweather","fantasy";color: hsl(128, 13%, 53%);} 
 h1 ul {border:none; display:flex; align-items:center}
+
 
 /*distacco dai bordi della barra superiore*/
 nav {margin:10px;}
@@ -16,17 +17,18 @@ nav { background: #f5f5dc; display: flex; align-items: center; padding: 0 0.5rem
 nav h1 { flex: auto; margin: 0; }
 
 /*riga separazione titolo login e insermento dati*/
-.content > header { border-bottom: 4px solid lightgray; display: flex; align-items: flex-end; }
-.content > header h1 { flex: auto; }
+/* .content > header { border-bottom: 4px solid lightgray; display: flex; align-items: flex-end; }
+.content > header h1 { flex: auto; } */
 
 /*bottoni*/
-li {padding: 0.5rem 1rem;background-color: #050202;text-decoration: none;border-radius: 5px;}
+li {padding: 0.5rem 1rem;background-color: #77977b;text-decoration: none;border-radius: 5px;}
 li {margin-bottom: 10px;}
 ul {list-style-type: none;}
 
 /*spazio tra la scritta login*/
 h1 {margin-left:20px;}
 
+/*a {color:} */
 
 
 
