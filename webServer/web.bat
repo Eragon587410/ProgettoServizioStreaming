@@ -1,1 +1,1 @@
-docker run --rm --name flask -it -v "%cd%\flaskr:/app" -p 5000:5000  -w /app python:3.12 bash -c "pip install flask cryptography sqlalchemy pymysql && apt update && apt install -y ffmpeg && bash start.sh"
+docker run --rm --name flask -it -v "%cd%\flaskr:/app" -p 5000:5000  -w /app python:3.12 bash -c "pip install flask cryptography sqlalchemy pymysql requests && apt update && apt install -y ffmpeg && bash start.sh"

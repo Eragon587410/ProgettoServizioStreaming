@@ -1,11 +1,13 @@
 from functools import wraps
-from flask import Flask, render_template, session, redirect, url_for, g, Response
+from flask import Flask, render_template, session, redirect, url_for, g, Response, stream_with_context, send_from_directory
 import sqlalchemy
 import db
 import auth
 import subprocess
 import socket
-
+import threading
+import requests
+import os
 
 app = Flask(__name__)
 app.secret_key = "DEV"
@@ -57,45 +59,72 @@ def play_film(film_id):
 
 
 
+HLS_FOLDER = "hls"
+os.makedirs(HLS_FOLDER, exist_ok=True)
+
 @app.route("/stream")
-def stream():
-    # socket verso il server Java
+def stream_from_java():
     java_sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     java_sock.connect(("host.docker.internal", 2160))
-    java_sock.sendall("test.txt\n".encode())
+    java_sock.sendall("esempio.ts\n".encode())
 
-    # FFmpeg: input raw h264/h265 → output MPEG-TS
-    ffmpeg = subprocess.Popen(
-        [
-            "ffmpeg",
-            "-loglevel", "quiet",
-            "-i", "pipe:0",         # input da stdin
-            "-c:v", "copy",         # non ricodifica (usiamo il codec originale)
-            "-f", "mpegts",         # container streamabile
-            "pipe:1"                # output su stdout
-        ],
-        stdin=subprocess.PIPE,
-        stdout=subprocess.PIPE
-    )
-
-    # THREAD: riceve raw dal Java e li manda a FFmpeg
-    def pump_input():
+    # FFmpeg: legge dalla pipe di Java e crea HLS
+   # ffmpeg = subprocess.Popen([
+    #    "ffmpeg",
+    #    "-i", "pipe:0",            # legge dalla stdin
+    #    "-c:v", "copy",
+    #    "-c:a", "copy",
+    #    "-f", "hls",
+    #    "-hls_time", "4",
+    #    "-hls_list_size", "5",
+    #    "-hls_flags", "delete_segments",
+    #    os.path.join(HLS_FOLDER, "stream.m3u8")
+    #], stdin=subprocess.PIPE)
+    ffmpeg = subprocess.Popen([
+        "ffmpeg",
+        "-i", "pipe:0",
+        "-c:v", "libx264",        # ricodifica per PTS coerenti
+        "-preset", "veryfast",
+        "-c:a", "aac",            # ricodifica audio
+        "-b:a", "128k",
+        "-f", "hls",
+        "-hls_time", "2",
+        "-hls_list_size", "0",
+        "-hls_flags", "append_list+independent_segments",
+        os.path.join(HLS_FOLDER, "stream.m3u8")
+    ], stdin=subprocess.PIPE)
+    # Thread: forward dati da Java → FFmpeg
+    def forward():
         while True:
-            chunk = java_sock.recv(4096)
-            if not chunk:
+            data = java_sock.recv(8192)
+            if not data:
                 break
-            ffmpeg.stdin.write(chunk)
+            ffmpeg.stdin.write(data)
         ffmpeg.stdin.close()
+        java_sock.close()
 
-    import threading
-    threading.Thread(target=pump_input, daemon=True).start()
+    threading.Thread(target=forward, daemon=True).start()
 
-    # Generator del flusso MPEG-TS verso il browser
-    def generate():
-        while True:
-            out = ffmpeg.stdout.read(4096)
-            if not out:
-                break
-            yield out
+    return "Streaming avviato"
 
-    return Response(generate(), mimetype="video/mp2t")
+
+# Serve i segmenti HLS
+@app.route("/hls/<path:filename>")
+def hls(filename):
+    return send_from_directory(HLS_FOLDER, filename)
+
+
+# Player HTML
+@app.route("/view")
+def view_stream():
+    return """
+<!DOCTYPE html>
+<html>
+<body>
+  <h1>Streaming Live</h1>
+  <video id="video" controls autoplay width="800">
+    <source src="/hls/stream.m3u8" type="application/x-mpegURL">
+  </video>
+</body>
+</html>
+"""
