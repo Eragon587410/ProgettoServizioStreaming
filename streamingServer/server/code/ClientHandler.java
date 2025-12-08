@@ -28,7 +28,7 @@ public class ClientHandler extends Thread {
             System.out.println(message);
             buffer = new byte[4096];
             film = message;
-            File file = new File("film/esempio.ts");
+            File file = new File("film/video.ts");
             //bos.write(message.getBytes(), 0, message.getBytes().length); 
             //bos.flush();
             //socket.shutdownOutput(); //IMPORTANTE

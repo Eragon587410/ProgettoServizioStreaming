@@ -1,0 +1,13 @@
+ffmpeg -i video.mp4 ^
+  -filter:v:0 scale=1920:1080 -c:v:0 libx264 -preset slow -crf 21 -c:a:0 aac -b:a:0 160k ^
+  -filter:v:1 scale=1280:720  -c:v:1 libx264 -preset slow -crf 23 -c:a:1 aac -b:a:1 128k ^
+  -filter:v:2 scale=854:480   -c:v:2 libx264 -preset slow -crf 25 -c:a:2 aac -b:a:2 96k ^
+  -filter:v:3 scale=640:360   -c:v:3 libx264 -preset slow -crf 28 -c:a:3 aac -b:a:3 64k ^
+  -map 0:v -map 0:a -map 0:v -map 0:a -map 0:v -map 0:a -map 0:v -map 0:a ^
+  -f hls ^
+  -hls_time 6 ^
+  -hls_list_size 0 ^
+  -hls_segment_filename "v%v\segment_%03d.ts" ^
+  -master_pl_name master.m3u8 ^
+  -var_stream_map "v:0,a:0 v:1,a:1 v:2,a:2 v:3,a:3" ^
+  v%v\index.m3u8

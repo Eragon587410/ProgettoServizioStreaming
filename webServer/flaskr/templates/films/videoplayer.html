@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            background: #111;
+            color: #fff;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+        }
+
+        .player-container {
+            position: relative;
+            width: 800px;
+        }
+
+        video {
+            width: 100%;
+            border-radius: 8px;
+            background: black;
+        }
+
+        .quality-select {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(0, 0, 0, 0.7);
+            border: none;
+            color: #fff;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 14px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Streaming Live</h1>
+
+    <div class="player-container">
+        <video id="video" controls autoplay></video>
+        <select id="quality" class="quality-select">
+            <option value="-1">Auto</option>
+        </select>
+    </div>
+
+    <script>
+        const video = document.getElementById('video');
+        const qualitySelect = document.getElementById('quality');
+
+        if (Hls.isSupported()) {
+            const hls = new Hls({
+                maxBufferLength: 12,      // buffer massimo 12s
+                maxMaxBufferLength: 24,   // buffer massimo in caso di rete veloce
+                maxBufferSize: 60 * 1000 * 1000, // max 60MB di buffer
+                maxBufferHole: 0.5         // switch qualità più reattivo
+            });
+
+            hls.loadSource('/streaming/hls/test/master.m3u8');
+            hls.attachMedia(video);
+
+            hls.on(Hls.Events.MANIFEST_PARSED, () => {
+                // Popola il menu con le qualità disponibili
+                hls.levels.forEach((level, index) => {
+                    const option = document.createElement('option');
+                    option.value = index;
+                    option.text = level.height + "p";
+                    qualitySelect.add(option);
+                });
+
+                // Auto by default
+                hls.currentLevel = -1;
+            });
+
+            // Cambia qualità manualmente
+            qualitySelect.addEventListener('change', () => {
+                hls.currentLevel = parseInt(qualitySelect.value);
+                hls.stopLoad();  // ferma il download dei segmenti correnti
+                hls.startLoad(); // riprende dai nuovi segmenti del livello scelto
+            });
+
+        } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+            video.src = '/streaming/hls/test/master.m3u8';
+        }
+    </script>
+</body>
+
+</html>

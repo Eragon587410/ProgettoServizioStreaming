@@ -1,1 +1,1 @@
-docker run -it --rm --name streaming -v "%cd%\server:/app" -p 2160:2160 -w /app/code  mcr.microsoft.com/openjdk/jdk:17-ubuntu bash -c "apt update && javac *.java && java Server"
+docker run -d --name hls-server -p 8080:80 -v "%cd%\film\hls:/usr/share/nginx/html/hls:ro" nginx:latest
