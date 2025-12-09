@@ -57,3 +57,65 @@ form button {
     color: #111;
     font-weight: 500;
 }
+
+/* --- CENTRARE TITOLO E LINK LOGIN/REGISTER --- */
+
+/* Contenitore nav (già centrato) */
+nav {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+}
+
+/* Centra titolo */
+nav h1 {
+    text-align: center;
+}
+
+/* Lista dei link */
+nav ul {
+    display: flex;
+    flex-direction: column; /* mette i link uno sotto l'altro */
+    align-items: center;
+    gap: 10px;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+/* Ogni voce della lista */
+nav ul li {
+    margin: 0;
+}
+
+/* --- STILE DEI BOTTONI --- */
+nav ul li a {
+    text-decoration: none;
+    background: #ff8a44;
+    color: white;
+    padding: 12px 26px;
+    font-size: 16px;
+    border-radius: 14px;
+    font-weight: 600;
+    display: inline-block; 
+    transition: transform 0.15s ease, background 0.2s ease; 
+}
+
+/* Effetto hover */
+nav ul li a:hover {
+    background: #ff7a22;
+    transform: translateY(-2px);
+}
+
+/* Effetto click */
+nav ul li a:active {
+    transform: scale(0.96);
+}
+
+
+/* Rimuove eventuali spazi laterali degli <li> */
+/* nav ul li {
+    margin: 0;
+} */
+
