@@ -51,9 +51,7 @@ def load_user():
 
 
 
-@app.route("/film/<film_id>") #<int:film_id>
-def play_film(film_id):
-    return redirect(url_for('streaming.view_stream'))
+
 
 
 

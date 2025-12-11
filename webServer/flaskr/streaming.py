@@ -86,6 +86,7 @@ def hls(filename):
 @bp.route("/view")
 @login_required
 def view_stream():
+    g.film = {"id" : "test", "title" : "S.L. EP. 1"}
 #    stream_from_java()
     #while not finito == True:
     #    time.sleep(0.1)
@@ -101,3 +102,8 @@ def view_stream():
 # </body>
 # </html>
 # """
+
+@bp.route("/film/<film_id>") #<int:film_id>
+def play_film(film):
+    g.film = film 
+    return render_template("films/videoplayer.html")#redirect(url_for('streaming.view_stream'))
