@@ -3,12 +3,11 @@
 <link rel="stylesheet" href="{{ url_for('static', filename='stile.css') }}">
 <nav>
   <!--==================TITOLO E LINK LOGIN REGISTER===================-->
-  <h1>Streaming</h1>
   <ul>
     {% if g.user %}
       <li><span>{{ g.user['username'] }}</span></li>
-      <li><a>User: {{ g.user }}</a></li>
-      <li><a href="{{ url_for('auth.logout') }}">Log Out</a></li>
+      <li><a href="#" class="nohover">User: {{ g.user }}</a></li>
+      <li ><a href="{{ url_for('auth.logout') }}">Log Out</a></li>
     {% else %}
       <li><a href="{{ url_for('auth.register') }}">Register</a></li>
       <li><a href="{{ url_for('auth.login') }}">Log In</a></li>

@@ -2,9 +2,9 @@
 .content {
     display: flex;
     flex-direction: column;
-    align-items: center; /* centra orizzontalmente */
+    align-items: center;
     margin-top: 40px;
-    gap: 20px; /* distanza tra gli elementi */
+    gap: 20px;
 }
 
 /* Titolo Log In */
@@ -28,12 +28,12 @@ form input[type="password"] {
     font-size: 16px;
     margin-bottom: 15px;
     outline: none;
-    display: block; /* assicurati che siano uno sopra l'altro */
+    display: block;
 }
 
 /* Pulsante arancione */
 form input[type="submit"] {
-    width: 320px;
+    width: 356px;
     padding: 18px;
     font-size: 18px;
     background: #ff8a44;
@@ -41,32 +41,35 @@ form input[type="submit"] {
     border: none;
     border-radius: 14px;
     font-weight: 600;
+    transition: transform 0.15s ease, background 0.2s ease; 
+    align-items: center;
+    text-align: center;
+    
 }
 
-/* Link Register o altri pulsanti */
-form a,
-form button {
-    width: 320px;
-    padding: 14px;
-    text-align: center;
-    background: #f0f0f5;
-    border-radius: 14px;
-    display: block;
-    margin-bottom: 15px; /* distanza dagli altri */
-    text-decoration: none;
-    color: #111;
-    font-weight: 500;
+form input[type="submit"]:hover{
+    background: #ff7a22;
+    transform: translateY(-2px);
 }
+
+form input[type="submit"]:active{
+    transform: scale(0.96);
+}
+
+
 
 /* --- CENTRARE TITOLO E LINK LOGIN/REGISTER --- */
 
 /* Contenitore nav (già centrato) */
 nav {
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 12px;
+    justify-content: flex-end;
+    box-sizing: border-box;
 }
+
+/* nav,ul{
+    width: 120rem;
+} */
 
 /* Centra titolo */
 nav h1 {
@@ -76,7 +79,7 @@ nav h1 {
 /* Lista dei link */
 nav ul {
     display: flex;
-    flex-direction: column; /* mette i link uno sotto l'altro */
+    /* flex-direction: column; */
     align-items: center;
     gap: 10px;
     list-style: none;
@@ -84,10 +87,7 @@ nav ul {
     margin: 0;
 }
 
-/* Ogni voce della lista */
-nav ul li {
-    margin: 0;
-}
+
 
 /* --- STILE DEI BOTTONI --- */
 nav ul li a {
@@ -103,13 +103,13 @@ nav ul li a {
 }
 
 /* Effetto hover */
-nav ul li a:hover {
+nav ul li a:not(#nohover):hover {
     background: #ff7a22;
     transform: translateY(-2px);
 }
 
 /* Effetto click */
-nav ul li a:active {
+nav ul li a:not(#nohover):hover {
     transform: scale(0.96);
 }
 
