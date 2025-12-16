@@ -9,9 +9,13 @@ engine = create_engine("mysql+pymysql://root:root@host.docker.internal:3306/stre
 
 def get_db():
     db = engine.connect()
-    db.execute(text("CREATE TABLE IF NOT EXISTS users (name VARCHAR(50) PRIMARY KEY, password VARCHAR(255) NOT NULL)"))
+    db.execute(text("CREATE TABLE IF NOT EXISTS users (id INT AUTO_INCREMENT PRIMARY KEY, name VARCHAR(50) NOT NULL UNIQUE, password VARCHAR(255) NOT NULL)"))
     db.commit()
-    db.execute(text("CREATE TABLE IF NOT EXISTS films (id VARCHAR(8) PRIMARY KEY, title VARCHAR(50) NOT NULL, type VARCHAR(50) NOT NULL, description VARCHAR(255) NOT NULL, image VARCHAR(255) NOT NULL)"))
+    db.execute(text("CREATE TABLE IF NOT EXISTS films (id INT AUTO_INCREMENT PRIMARY KEY, title VARCHAR(50) NOT NULL, description VARCHAR(255) NOT NULL, image VARCHAR(255) NOT NULL)"))
+    db.commit()
+    db.execute(text("CREATE TABLE IF NOT EXISTS genres (id INT AUTO_INCREMENT PRIMARY KEY, name VARCHAR(50) NOT NULL UNIQUE)"))
+    db.commit()
+    db.execute(text("CREATE TABLE IF NOT EXISTS film_genres (film_id INT REFERENCES films(id), genre_id INT REFERENCES genres(id), PRIMARY KEY(film_id, genre_id))"))
     db.commit()
     return db
     
@@ -29,7 +33,7 @@ def get_films():
         result = db.execute(text("SELECT * FROM films")).all()
         session["films"] = []
         for film in result:
-            session["films"].append({"id": film[0], "title": film[1], "type" : film[2], "description" : film[3], "image" : film[4]})
+            session["films"].append({"id": film[0], "title": film[1], "description" : film[2], "image" : film[3]})
 
 
 def init_app(app):

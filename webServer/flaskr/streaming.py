@@ -104,6 +104,6 @@ def view_stream():
 # """
 
 @bp.route("/film/<film_id>") #<int:film_id>
-def play_film(film):
-    g.film = film 
+def play_film(film_id):
+    g.film = {"id" : film_id} 
     return render_template("films/videoplayer.html")#redirect(url_for('streaming.view_stream'))
