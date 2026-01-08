@@ -13,7 +13,7 @@ if %errorlevel%==0 (
     docker start -ai %FLASK_CONTAINER%
 ) else (
     echo Creazione e avvio container Flask in modalità interattiva...
-    docker run --name %FLASK_CONTAINER% -it -p 5000:5000 -v "%cd%\webServer\flaskr:/app" -w /app %FLASK_IMAGE% bash 
+    docker run --rm --name %FLASK_CONTAINER% -it -p 5000:5000 -v "%cd%\webServer\flaskr:/app" -w /app %FLASK_IMAGE% bash 
 )
 
 echo Sei dentro il container Flask.

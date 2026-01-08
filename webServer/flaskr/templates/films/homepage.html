@@ -6,7 +6,7 @@
 
 {% block content %}
     {% for film in g.films %}
-        <p>titolo: {{ film["title"] }} genere: {{ film["type"] }} descrizione: {{ film["description"] }}</p>
+        <p>titolo: {{ film.title }} descrizione: {{ film.description }}</p>
         <a href="{{ url_for('streaming.play_film', film_id=film['id']) }}">
           <img src="{{ film['image'] }}" width="300" height="200">
         </a>

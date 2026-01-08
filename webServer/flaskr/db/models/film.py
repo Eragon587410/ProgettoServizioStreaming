@@ -19,3 +19,10 @@ class Film(Base):
         record = super().__new__(cls)
         record.__init__(**kwargs)
         return record
+    
+    @classmethod
+    def get_films(cls):
+        films = None
+        with cls.session() as session:
+            films = session.query(cls).all()
+        return films

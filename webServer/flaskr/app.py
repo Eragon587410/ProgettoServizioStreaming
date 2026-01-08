@@ -1,7 +1,7 @@
 from functools import wraps
 from flask import Flask, render_template, session, redirect, url_for, g, Response, stream_with_context, send_from_directory
 import sqlalchemy
-import db
+import db.models as models
 import auth
 import subprocess
 import socket
@@ -19,16 +19,20 @@ app.register_blueprint(auth.bp)
 app.register_blueprint(streaming.bp)
 
 
-db.init_app(app)
+#db.init_app(app)
 
 
 
 
 #@app.before_request
+#def load_films():
+#    db.get_films()
+#    if session.get("films"):
+#        g.films = session['films']
+
 def load_films():
-    db.get_films()
-    if session.get("films"):
-        g.films = session['films']
+    films = models.Film.get_films()
+    g.films = films
 
 @app.route("/")
 def homepage():
