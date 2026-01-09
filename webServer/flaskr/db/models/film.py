@@ -1,14 +1,14 @@
 from ..base import *
-from  .film_genres import *
+from  .middle_tables import *
 
 class Film(Base):
     __tablename__ = "Film"
 
     title: Mapped[str] = mapped_column(String(255))
     description: Mapped[str] = mapped_column(Text)
-    views: Mapped[int] = mapped_column(Integer)
 
     genres: Mapped[list["Genre"]] = relationship(secondary=film_genres, back_populates="films")
+    users: Mapped[list["User"]] = relationship(secondary=user_films, back_populates="films")
 
     def __new__(cls, session = None, **kwargs):
         if session and "id" in kwargs:
@@ -21,8 +21,15 @@ class Film(Base):
         return record
     
     @classmethod
-    def get_films(cls):
+    def get_films(cls, session = None):
         films = None
-        with cls.session() as session:
+        if session is None:
+            with cls.session() as session:
+                films = session.query(cls).all()
+        else:
             films = session.query(cls).all()
         return films
+    
+    @property
+    def views(self):
+        return len(self.users)
