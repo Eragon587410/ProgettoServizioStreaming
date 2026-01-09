@@ -1,5 +1,5 @@
 from ..base import *
-from .film_genres import *
+from .middle_tables import *
 
 class Genre(Base):
     __tablename__ = "Genre"

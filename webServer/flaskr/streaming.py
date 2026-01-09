@@ -1,8 +1,9 @@
 import requests
 from _common import *
+import db.models as models
 
 from flask import (
-    Blueprint, flash, g, redirect, render_template, request, session, url_for, send_from_directory, Response, stream_with_context
+    Blueprint, flash, g, redirect, render_template, request, session as br_session, url_for, send_from_directory, Response, stream_with_context
 )
 
 bp = Blueprint('streaming', __name__, url_prefix='/streaming')
@@ -104,6 +105,21 @@ def view_stream():
 # """
 
 @bp.route("/film/<film_id>") #<int:film_id>
+@login_required
 def play_film(film_id):
-    g.film = {"id" : film_id} 
-    return render_template("films/videoplayer.html")#redirect(url_for('streaming.view_stream'))
+    out = None
+    with models.Film.session() as session:
+        g.film = models.Film(session=session, id=film_id)
+        if g.film.persistent:
+            out = render_template("films/videoplayer.html") 
+            user = models.User(session=session, username=g.user)
+            if g.film in user.films:
+                user.films.remove(g.film)
+                session.add(user)
+                session.commit()
+            user.films.append(g.film)
+            session.add(user)
+            session.commit()
+
+    return out
+    #redirect(url_for('streaming.view_stream'))

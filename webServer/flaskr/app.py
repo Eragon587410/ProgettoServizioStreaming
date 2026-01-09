@@ -30,8 +30,8 @@ app.register_blueprint(streaming.bp)
 #    if session.get("films"):
 #        g.films = session['films']
 
-def load_films():
-    films = models.Film.get_films()
+def load_films(session):
+    films = models.Film.get_films(session=session)
     g.films = films
 
 @app.route("/")
@@ -42,8 +42,9 @@ def homepage():
 @app.route("/films")
 @login_required
 def films():
-    load_films()
-    return render_template('films/homepage.html')
+    with models.Film.session() as session:
+        load_films(session)
+        return render_template('films/homepage.html')
 
 
 @app.before_request

@@ -1,6 +1,6 @@
 from .film import Film
 from .genre import Genre
 from .user import User
-from .film_genres import film_genres
+from .middle_tables import film_genres
 
-__all__ = ["Film", "Genre", "User", "film_genres"]
+__all__ = ["Film", "Genre", "User", "middle_tables"]
