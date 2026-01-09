@@ -5,7 +5,7 @@
   <!--==================TITOLO E LINK LOGIN REGISTER===================-->
   <ul>
     {% if g.user %}
-      <li><span>{{ g.user['username'] }}</span></li>
+     <!--<li><span>{{ g.user['username'] }}</span></li>-->
       <li><a href="#" class="nohover">User: {{ g.user }}</a></li>
       <li ><a href="{{ url_for('auth.logout') }}">Log Out</a></li>
     {% else %}

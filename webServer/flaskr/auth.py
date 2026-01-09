@@ -1,5 +1,5 @@
 from flask import (
-    Blueprint, flash, g, redirect, render_template, request, session, url_for,
+    Blueprint, flash, g, redirect, render_template, request, session as br_session, url_for,
 )
 import db.models as models
 from sqlalchemy import text
@@ -18,10 +18,11 @@ def register():
         #db.execute(text("INSERT INTO users (name, password) VALUES (:name, :password)"), {"name" : username, "password": password_hash(password)})
         #db.commit()
         with models.User.session() as session:
-            user = models.User(session=session, username=username, password=hashlib.sha256(password.encode()).hexdigest())
+            user = models.User(session=session, username=username)
             if user.persistent:
                 out = "username già in uso"
             else:
+                user.set_password(password)
                 session.add(user)
                 session.commit()
                 out = redirect(url_for('auth.login'))
@@ -40,9 +41,9 @@ def login():
         #result = db.execute(text("SELECT * FROM users WHERE name = :username AND password = :password"), {"username" : username, "password" : password_hash(password)}).first()
         with models.User.session() as session:
             record = models.User(session=session, username=username)
-            if record.persistent and record.password == hashlib.sha256(password.encode()).hexdigest():
+            if record.persistent and record.login(password):
                 out = redirect(url_for('films'))
-                session['user'] = record
+                br_session['user'] = record.username
             else:
                 out = "credenziali errate"
     else:
@@ -51,7 +52,7 @@ def login():
 
 @bp.route('/logout')
 def logout():
-    session.clear()
+    br_session.clear()
     return redirect(url_for('auth.login'))
 
 

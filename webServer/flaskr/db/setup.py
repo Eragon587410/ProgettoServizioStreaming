@@ -1,10 +1,14 @@
-import sys
-import os
-sys.path.append(os.path.dirname(os.path.abspath(__file__)))
+from db.base import Base
+from db.engine import engine
 
-from .base import Base
-from .engine import engine
-from models.user import User
-from models.film import Film
-from models.genre import Genre
-from models.film_genres import film_genres
+from db.models.user import User
+from db.models.film import Film
+from db.models.genre import Genre
+from db.models.film_genres import film_genres
+
+
+def main():
+    Base.metadata.create_all(bind=engine)
+
+if __name__ == "__main__":
+    main()
