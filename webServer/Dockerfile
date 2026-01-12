@@ -12,10 +12,10 @@ RUN pip install --no-cache-dir flask cryptography sqlalchemy pymysql requests
 
 # Rendi eseguibile lo script
 
-RUN chmod +x /app/streamdash.sh
+RUN chmod +x /app/streamdash2.sh
 
 # Copia in /usr/local/bin per renderlo globale
-RUN cp /app/streamdash.sh /usr/local/bin/streamdash
+RUN cp /app/streamdash2.sh /usr/local/bin/streamdash
 
 
 
