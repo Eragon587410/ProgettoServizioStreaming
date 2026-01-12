@@ -20,6 +20,10 @@ class Film(Base):
         record.__init__(**kwargs)
         return record
     
+    @property
+    def views(self):
+        return len(self.users)
+    
     @classmethod
     def get_films(cls, session = None):
         films = None
@@ -30,6 +34,16 @@ class Film(Base):
             films = session.query(cls).all()
         return films
     
-    @property
-    def views(self):
-        return len(self.users)
+    @classmethod
+    def get_most_popular_films(cls, genre = None):
+        from .genre import Genre
+        with cls.session() as session:
+            query = select(cls).order_by(desc(cls.views))
+            if genre:
+                #query = query.where(genre in cls.genres)
+                query = query.join(cls.genres).where(Genre.name == genre)
+            films = session.execute(query).scalars().all()
+        return films
+
+    
+    

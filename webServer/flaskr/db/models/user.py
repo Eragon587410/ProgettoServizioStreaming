@@ -1,5 +1,6 @@
 from ..base import *
 from .middle_tables import user_films
+from collections import defaultdict
 from werkzeug.security import generate_password_hash, check_password_hash
 
 class User(Base):
@@ -30,4 +31,25 @@ class User(Base):
     
     def set_password(self, password):
         self.password = generate_password_hash(password)
-            
+
+    def get_recent_genres(self):
+        genres = defaultdict(int)
+        for film in self.films[:10]:
+            for genre in film.genres:
+                genres[genre.id] += 1
+        touple_list = sorted(genres.items(), key=lambda x: x[1], reverse=True)[:3]
+        return [genre[0] for genre in touple_list]
+    
+    def get_recommended_films(self):
+        from .film import Film
+        film_list = []
+        added_ids = set()
+        genres = self.get_recent_genres() * 3
+        for genre in genres:
+            top_genre_films = Film.get_most_popular_films(genre=genre)
+            for film in top_genre_films:
+                if film.id not in added_ids:
+                    film_list.append(film)
+                    added_ids.add(film.id)
+                    break
+        return film_list
