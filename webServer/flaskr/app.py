@@ -1,5 +1,5 @@
 from functools import wraps
-from flask import Flask, render_template, session, redirect, url_for, g, Response, stream_with_context, send_from_directory
+from flask import Flask, render_template, session, redirect, url_for, g, Response, stream_with_context, send_from_directory, request, jsonify
 import sqlalchemy
 import db.models as models
 import auth
@@ -53,6 +53,23 @@ def load_user():
         g.user = session['user']
     else:
         g.user = None
+
+
+@app.route("/search")
+def search():
+    query = request.args.get("q", "")
+    films = models.Film.searchbar(query) if query else []
+    return render_template("search_results.html", films=films, query=query)
+
+@app.route("/autocomplete")
+def autocomplete():
+    term = request.args.get("term", "")
+    if not term:
+        return jsonify([])
+
+    films = models.Film.searchbar(term)  # usa il tuo metodo già fatto
+    # Prendi solo i titoli per i suggerimenti
+    return jsonify(films)
 
 
 

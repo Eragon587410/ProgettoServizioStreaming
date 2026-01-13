@@ -56,7 +56,7 @@ class Film(Base):
                 if txt in film.title:
                     film_list.append(film)
             film_list.sort(key=lambda x: x.views, reverse=True)
-        return [film.title for film in film_list[:20]]
+        return [film.title for film in film_list[:5]]
 
     
     
