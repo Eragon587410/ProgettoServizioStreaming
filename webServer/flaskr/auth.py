@@ -20,7 +20,7 @@ def register():
         with models.User.session() as session:
             user = models.User(session=session, username=username)
             if user.persistent:
-                out = "username già in uso"
+                out = render_template('auth/register.html', show_modal = "username già in uso")
             else:
                 user.set_password(password)
                 session.add(user)
@@ -45,7 +45,7 @@ def login():
                 out = redirect(url_for('films'))
                 br_session['user'] = record.username
             else:
-                out = "credenziali errate"
+                out = render_template('auth/login.html', show_modal = "credenziali errate")
     else:
         out = render_template('auth/login.html')
     return out

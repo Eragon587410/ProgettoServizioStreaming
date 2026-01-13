@@ -6,6 +6,8 @@ class Film(Base):
 
     title: Mapped[str] = mapped_column(String(255))
     description: Mapped[str] = mapped_column(Text)
+    year: Mapped[str] = mapped_column(String(4))
+
 
     genres: Mapped[list["Genre"]] = relationship(secondary=film_genres, back_populates="films")
     users: Mapped[list["User"]] = relationship(secondary=user_films, back_populates="films")
@@ -44,6 +46,17 @@ class Film(Base):
                 query = query.join(cls.genres).where(Genre.name == genre)
             films = session.execute(query).scalars().all()
         return films
+    
+    @classmethod
+    def searchbar(cls, txt):
+        film_list = []
+        with cls.session() as session:
+            films = cls.get_films(session=session)
+            for film in films:
+                if txt in film.title:
+                    film_list.append(film)
+            film_list.sort(key=lambda x: x.views, reverse=True)
+        return [film.title for film in film_list[:20]]
 
     
     
