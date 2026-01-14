@@ -6,7 +6,6 @@ REM -----------------------------
 set FLASK_IMAGE=flask-image
 set FLASK_CONTAINER=flask
 
-REM --- Controlla se il container Flask esiste ---
 docker ps -a --format "{{.Names}}" | findstr /i "%FLASK_CONTAINER%" >nul
 if %errorlevel%==0 (
     echo Container %FLASK_CONTAINER% già esistente, avvio in shell mode...

@@ -1,3 +1,4 @@
 .venv
 __pycache__
 streamingServer/film/hls/*
+!streamingServer/film/hls/.gitkeep
