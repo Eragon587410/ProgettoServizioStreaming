@@ -80,6 +80,24 @@ def hls(filename):
         headers=headers,
         status=response.status_code
     )
+
+
+@bp.route("/image/<path:filename>")
+@login_required
+def image(filename):
+    response = requests.get(HLS_ADDRESS + filename)
+    headers = {
+        "Content-Type": response.headers.get("Content-Type", "application/octet-stream"),
+        "Content-Length": response.headers.get("Content-Length"),
+        "Cache-Control": "public, max-age=86400",
+    }
+
+    # Restituisce il flusso direttamente al client
+    return Response(
+        stream_with_context(response.iter_content(chunk_size=4096)),
+        headers=headers,
+        status=response.status_code
+    )
 #   return send_from_directory(HLS_FOLDER, filename)
 
 

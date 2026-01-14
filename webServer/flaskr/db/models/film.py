@@ -22,9 +22,18 @@ class Film(Base):
         record.__init__(**kwargs)
         return record
     
-    @property
+    @hybrid_property
     def views(self):
         return len(self.users)
+
+    @views.expression
+    def views(cls):
+        return (
+            select(func.count(user_films.c.user_id))
+            .where(user_films.c.film_id == cls.id)
+            .correlate(cls)
+            .scalar_subquery()
+        )
     
     @classmethod
     def get_films(cls, session = None):

@@ -44,8 +44,8 @@ class User(Base):
         from .film import Film
         film_list = []
         added_ids = set()
-        genres = self.get_recent_genres() * 3
-        for genre in genres:
+        genres = self.get_recent_genres() * 6
+        for genre in genres[:6]:
             top_genre_films = Film.get_most_popular_films(genre=genre)
             for film in top_genre_films:
                 if film.id not in added_ids:

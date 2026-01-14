@@ -72,6 +72,20 @@ def autocomplete():
     return jsonify(films)
 
 
+@app.context_processor
+def inject_globals():
+    return {
+        "genres": models.Genre.get_genres_names()
+    }
+
+
+@app.route("/genres/<name>")
+@login_required
+def genre(name):
+    films = models.Film.get_most_popular_films(genre=name)
+    return render_template('genres/genre.html', films=films)
+
+
 
 
 

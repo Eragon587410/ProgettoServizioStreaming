@@ -1,5 +1,6 @@
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column, relationship, sessionmaker
-from sqlalchemy import String, Text, Table, ForeignKey, Column, Integer, inspect, select, desc
+from sqlalchemy import String, Text, Table, ForeignKey, Column, Integer, inspect, select, desc, func
+from sqlalchemy.ext.hybrid import hybrid_property
 import uuid
 #from .common import *
 from .engine import *

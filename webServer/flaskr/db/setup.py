@@ -18,7 +18,7 @@ genres = [
     "Guerra",
     "Horror",
     "Musical",
-    "Poliziesco / Crime",
+    "Crime",
     "Romantico",
     "Storico",
     "Thriller",

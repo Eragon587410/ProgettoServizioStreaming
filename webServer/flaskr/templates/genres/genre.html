@@ -6,11 +6,11 @@
 
 {% block content %}
 <div class="row g-4">
-    {% for film in g.films %}
+    {% for film in films[:30] %}
     <div class="col-md-4">
         <div class="card h-100 shadow-sm">
             <a href="{{ url_for('streaming.play_film', film_id=film.id) }}">
-                <img src="/streaming/image/{{ film.id }}/image.png" class="card-img-top" alt="{{ film.title }}">
+                <img src="{{ film.image }}" class="card-img-top" alt="{{ film.title }}">
             </a>
             <div class="card-body d-flex flex-column">
                 <h5 class="card-title">{{ film.title }}</h5>
