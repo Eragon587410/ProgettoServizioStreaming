@@ -1,98 +1,72 @@
-<!DOCTYPE html>
-<html>
+{% extends 'base.html' %}
 
-<head>
-    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 20px;
-            background: #111;
-            color: #fff;
-        }
+{% block header %}
+<h1 class="text-center mb-4">{{ film.title }}</h1>
+{% endblock %}
 
-        h1 {
-            margin-bottom: 20px;
-        }
+{% block content %}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-lg-10">
 
-        .player-container {
-            position: relative;
-            width: 800px;
-        }
+            <div class="player-container position-relative">
+                <video id="video" class="w-100 rounded" controls></video>
 
-        video {
-            width: 100%;
-            border-radius: 8px;
-            background: black;
-        }
+                <select id="quality" class="quality-select">
+                    <option value="-1">Auto</option>
+                </select>
+            </div>
 
-        .quality-select {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            background: rgba(0, 0, 0, 0.7);
-            border: none;
-            color: #fff;
-            padding: 5px 10px;
-            border-radius: 4px;
-            font-size: 14px;
-            cursor: pointer;
-        }
-    </style>
-</head>
+            <div class="mt-3 text-muted">
+                
+                <p>{{ film.description }}</p>
+                <p><strong>Genere:</strong> {{ film.get_film_genres_str() }}</p>
+                <p><strong>Views:</strong> {{ film.views }}</p>
+            </div>
 
-<body>
-    <h1>Streaming Live</h1>
-
-    <div class="player-container">
-        <video id="video" controls autoplay></video>
-        <select id="quality" class="quality-select">
-            <option value="-1">Auto</option>
-        </select>
+        </div>
     </div>
+</div>
+{% endblock %}
 
-    <script>
-        const video = document.getElementById('video');
-        const qualitySelect = document.getElementById('quality');
+{% block scripts %}
+<script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
 
-        if (Hls.isSupported()) {
-            const hls = new Hls({
-                maxBufferLength: 12,      // buffer massimo 12s
-                maxMaxBufferLength: 24,   // buffer massimo in caso di rete veloce
-                maxBufferSize: 60 * 1000 * 1000, // max 60MB di buffer
-                maxBufferHole: 0.5         // switch qualità più reattivo
+<script>
+    const video = document.getElementById('video');
+    const qualitySelect = document.getElementById('quality');
+
+    if (Hls.isSupported()) {
+        const hls = new Hls({
+            maxBufferLength: 12,
+            maxMaxBufferLength: 24,
+            maxBufferSize: 60 * 1000 * 1000,
+            maxBufferHole: 0.5
+        });
+
+        hls.loadSource("/streaming/hls/{{ film.id }}/master.m3u8");
+        hls.attachMedia(video);
+
+        hls.on(Hls.Events.MANIFEST_PARSED, () => {
+            hls.levels.forEach((level, index) => {
+                const option = document.createElement('option');
+                option.value = index;
+                option.text = level.height + "p";
+                qualitySelect.add(option);
             });
 
-            hls.loadSource("/streaming/hls/{{ g.film['id'] }}/master.m3u8");
-            hls.attachMedia(video);
 
-            hls.on(Hls.Events.MANIFEST_PARSED, () => {
-                // Popola il menu con le qualità disponibili
-                hls.levels.forEach((level, index) => {
-                    const option = document.createElement('option');
-                    option.value = index;
-                    option.text = level.height + "p";
-                    qualitySelect.add(option);
-                });
+            hls.currentLevel = -1;
 
-                // Auto by default
-                hls.currentLevel = -1;
-            });
+            video.pause();
+        });
 
-            // Cambia qualità manualmente
-            qualitySelect.addEventListener('change', () => {
-                hls.currentLevel = parseInt(qualitySelect.value);
-                hls.stopLoad();  // ferma il download dei segmenti correnti
-                hls.startLoad(); // riprende dai nuovi segmenti del livello scelto
-            });
+        qualitySelect.addEventListener('change', () => {
+            hls.currentLevel = parseInt(qualitySelect.value);
+        });
 
-        } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
-            video.src = "/streaming/hls/{{ g.film['id'] }}/master.m3u8";
-        }
-    </script>
-</body>
-
-</html>
+    } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+        video.src = "/streaming/hls/{{ film.id }}/master.m3u8";
+    }
+</script>
+{% endblock %}

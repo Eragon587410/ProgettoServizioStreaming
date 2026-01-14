@@ -68,6 +68,7 @@ finito = False
 @bp.route("/hls/<path:filename>")
 @login_required
 def hls(filename):
+    print(HLS_ADDRESS + filename)
     response = requests.get(HLS_ADDRESS + filename)
     headers = {
         "Content-Type": response.headers.get("Content-Type", "application/octet-stream"),
@@ -105,7 +106,8 @@ def image(filename):
 @bp.route("/view")
 @login_required
 def view_stream():
-    g.film = {"id" : "test", "title" : "S.L. EP. 1"}
+    with models.Film.session() as session:
+        g.film = models.Film(session=session, id="test")#{"id" : "test", "title" : "S.L. EP. 1"}
 #    stream_from_java()
     #while not finito == True:
     #    time.sleep(0.1)
@@ -127,15 +129,15 @@ def view_stream():
 def play_film(film_id):
     out = None
     with models.Film.session() as session:
-        g.film = models.Film(session=session, id=film_id)
-        if g.film.persistent:
-            out = render_template("films/videoplayer.html") 
+        film = models.Film(session=session, id=film_id)
+        if film.persistent:
+            out = render_template("films/videoplayer.html", film=film) 
             user = models.User(session=session, username=g.user)
-            if g.film in user.films:
-                user.films.remove(g.film)
+            if film in user.films:
+                user.films.remove(film)
                 session.add(user)
                 session.commit()
-            user.films.append(g.film)
+            user.films.append(film)
             session.add(user)
             session.commit()
 

@@ -22,4 +22,5 @@ class Genre(Base):
         with cls.session() as session:
             genres = session.query(cls).all()
             return [genre.name for genre in genres]
+        
     

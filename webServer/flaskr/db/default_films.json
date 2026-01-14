@@ -1,0 +1,152 @@
+[
+  {
+    "titolo": "Il Signore degli Anelli: Le Due Torri",
+    "anno_uscita": 2003,
+    "generi": ["Fantasy", "Avventura", "Azione"],
+    "descrizione": "La Compagnia si è divisa. Frodo e Sam proseguono verso Mordor mentre Aragorn, Legolas e Gimli difendono la Terra di Mezzo dall’avanzata di Saruman."
+  },
+  {
+    "titolo": "Saw - L'enigmista",
+    "anno_uscita": 2005,
+    "generi": ["Horror", "Thriller"],
+    "descrizione": "Due uomini si risvegliano incatenati in una stanza e devono affrontare giochi mortali ideati da un killer che punisce chi non apprezza la vita."
+  },
+  {
+    "titolo": "Star Wars: Una nuova speranza",
+    "anno_uscita": 1977,
+    "generi": ["Fantascienza", "Avventura", "Azione"],
+    "descrizione": "Luke Skywalker si unisce alla Ribellione per combattere l’Impero Galattico e distruggere la Morte Nera."
+  },
+  {
+    "titolo": "Balto",
+    "anno_uscita": 1995,
+    "generi": ["Animazione", "Avventura", "Famiglia"],
+    "descrizione": "Un cane emarginato diventa l’eroe di una corsa disperata per portare un vaccino salvavita in una città dell’Alaska."
+  },
+  {
+    "titolo": "The Nightmare Before Christmas",
+    "anno_uscita": 1993,
+    "generi": ["Animazione", "Fantasy", "Musical"],
+    "descrizione": "Jack Skeletron scopre il Natale e tenta di sostituirlo ad Halloween, creando caos tra due mondi opposti."
+  },
+  {
+    "titolo": "1917",
+    "anno_uscita": 2019,
+    "generi": ["Guerra", "Drammatico"],
+    "descrizione": "Due soldati britannici devono attraversare il fronte nemico per consegnare un messaggio che può salvare centinaia di vite."
+  },
+  {
+    "titolo": "American Sniper",
+    "anno_uscita": 2014,
+    "generi": ["Guerra", "Biografico", "Drammatico"],
+    "descrizione": "La storia del cecchino Chris Kyle e del suo difficile equilibrio tra guerra e vita privata."
+  },
+  {
+    "titolo": "Bohemian Rhapsody",
+    "anno_uscita": 2018,
+    "generi": ["Biografico", "Musical", "Drammatico"],
+    "descrizione": "Il racconto dell’ascesa dei Queen e della vita di Freddie Mercury."
+  },
+  {
+    "titolo": "Il pianista",
+    "anno_uscita": 2002,
+    "generi": ["Drammatico", "Storico", "Guerra"],
+    "descrizione": "Un pianista ebreo cerca di sopravvivere nella Varsavia occupata dai nazisti durante la Seconda Guerra Mondiale."
+  },
+  {
+    "titolo": "F1",
+    "anno_uscita": 2025,
+    "generi": ["Drammatico", "Sportivo"],
+    "descrizione": "Un ex pilota di Formula 1 torna in pista come mentore di un giovane talento in un mondo competitivo e spietato."
+  },
+  {
+    "titolo": "Coach Carter",
+    "anno_uscita": 2005,
+    "generi": ["Drammatico", "Sportivo"],
+    "descrizione": "Un allenatore di basket impone disciplina e studio ai suoi giocatori per insegnare il valore della responsabilità."
+  },
+  {
+    "titolo": "Dragon Trainer",
+    "anno_uscita": 2010,
+    "generi": ["Animazione", "Fantasy", "Avventura"],
+    "descrizione": "Un giovane vichingo stringe amicizia con un drago, cambiando per sempre il rapporto tra umani e draghi."
+  },
+  {
+    "titolo": "Fast and Furious",
+    "anno_uscita": 2001,
+    "generi": ["Azione", "Crime"],
+    "descrizione": "Corse clandestine, rapine e rivalità nel mondo della street racing."
+  },
+  {
+    "titolo": "Il buono, il brutto, il cattivo",
+    "anno_uscita": 1966,
+    "generi": ["Western"],
+    "descrizione": "Tre pistoleri rivali cercano un tesoro nascosto durante la Guerra di Secessione americana."
+  },
+  {
+    "titolo": "Indiana Jones e i predatori dell'arca perduta",
+    "anno_uscita": 1981,
+    "generi": ["Avventura", "Azione"],
+    "descrizione": "L’archeologo Indiana Jones affronta i nazisti nella corsa per ritrovare l’Arca dell’Alleanza."
+  },
+  {
+    "titolo": "Il padrino",
+    "anno_uscita": 1972,
+    "generi": ["Crime", "Drammatico"],
+    "descrizione": "La saga della famiglia mafiosa Corleone e della sua lotta per il potere."
+  },
+  {
+    "titolo": "Interstellar",
+    "anno_uscita": 2014,
+    "generi": ["Fantascienza", "Drammatico"],
+    "descrizione": "Un gruppo di astronauti viaggia oltre la nostra galassia per salvare l’umanità."
+  },
+  {
+    "titolo": "IT",
+    "anno_uscita": 2017,
+    "generi": ["Horror", "Thriller"],
+    "descrizione": "Un’entità malvagia assume le sembianze di un clown e terrorizza un gruppo di ragazzi."
+  },
+  {
+    "titolo": "John Wick",
+    "anno_uscita": 2014,
+    "generi": ["Azione", "Thriller"],
+    "descrizione": "Un ex killer torna in azione per vendicarsi dopo aver perso tutto."
+  },
+  {
+    "titolo": "La La Land",
+    "anno_uscita": 2016,
+    "generi": ["Musical", "Romantico", "Drammatico"],
+    "descrizione": "Una storia d’amore tra sogni, musica e sacrifici a Los Angeles."
+  },
+  {
+    "titolo": "Le pagine della nostra vita",
+    "anno_uscita": 2004,
+    "generi": ["Romantico", "Drammatico"],
+    "descrizione": "Un amore intenso che attraversa gli anni e le difficoltà della vita."
+  },
+  {
+    "titolo": "Oppenheimer",
+    "anno_uscita": 2023,
+    "generi": ["Biografico", "Drammatico", "Storico"],
+    "descrizione": "La vita di J. Robert Oppenheimer e la creazione della bomba atomica."
+  },
+  {
+    "titolo": "Spider-Man 2",
+    "anno_uscita": 2004,
+    "generi": ["Azione", "Supereroi"],
+    "descrizione": "Peter Parker affronta nuove sfide personali mentre combatte il Dottor Octopus."
+  },
+  {
+    "titolo": "The Batman",
+    "anno_uscita": 2022,
+    "generi": ["Azione", "Crime", "Drammatico"],
+    "descrizione": "Batman indaga su una serie di omicidi che svelano la corruzione di Gotham."
+  },
+  {
+    "titolo": "Titanic",
+    "anno_uscita": 1997,
+    "generi": ["Romantico", "Drammatico"],
+    "descrizione": "Una storia d’amore sullo sfondo del tragico affondamento del Titanic."
+  }
+]

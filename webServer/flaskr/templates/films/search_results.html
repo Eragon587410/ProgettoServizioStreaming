@@ -6,7 +6,7 @@
 
 {% block content %}
 <div class="row g-4">
-    {% for film in films %}
+    {% for film in films[:30] %}
     <div class="col-md-4">
         <div class="card h-100 shadow-sm">
              <a href="{{ url_for('streaming.play_film', film_id=film.id) }}" class="position-relative film-card">

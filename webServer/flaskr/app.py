@@ -43,8 +43,10 @@ def homepage():
 @login_required
 def films():
     with models.Film.session() as session:
-        load_films(session)
-        return render_template('films/homepage.html')
+        user = models.User(session=session, username=g.user)
+        recommended_films = user.get_recommended_films(session=session)
+        popular_films = models.Film.get_most_popular_films(session=session)[:15]
+        return render_template('films/homepage.html', recommended_films=recommended_films, popular_films=popular_films)
 
 
 @app.before_request
@@ -58,8 +60,9 @@ def load_user():
 @app.route("/search")
 def search():
     query = request.args.get("q", "")
-    films = models.Film.searchbar(query) if query else []
-    return render_template("search_results.html", films=films, query=query)
+    with models.Film.session() as session:
+        films = models.Film.search_result(txt=query, session=session) if query else []
+        return render_template("films/search_results.html", films=films, query=query)
 
 @app.route("/autocomplete")
 def autocomplete():
@@ -67,8 +70,7 @@ def autocomplete():
     if not term:
         return jsonify([])
 
-    films = models.Film.searchbar(term)  # usa il tuo metodo già fatto
-    # Prendi solo i titoli per i suggerimenti
+    films = models.Film.searchbar(term)  
     return jsonify(films)
 
 
@@ -82,8 +84,9 @@ def inject_globals():
 @app.route("/genres/<name>")
 @login_required
 def genre(name):
-    films = models.Film.get_most_popular_films(genre=name)
-    return render_template('genres/genre.html', films=films)
+    with models.Film.session() as session:
+        films = models.Film.get_most_popular_films(session=session, genre=name)[:30]
+        return render_template('genres/genre.html', films=films)
 
 
 

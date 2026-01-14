@@ -35,6 +35,9 @@ class Film(Base):
             .scalar_subquery()
         )
     
+    def get_film_genres_str(self):
+        return ", ".join(genre.name for genre in self.genres)
+    
     @classmethod
     def get_films(cls, session = None):
         films = None
@@ -46,14 +49,18 @@ class Film(Base):
         return films
     
     @classmethod
-    def get_most_popular_films(cls, genre = None):
+    def get_most_popular_films(cls, session=None, genre = None):
         from .genre import Genre
-        with cls.session() as session:
-            query = select(cls).order_by(desc(cls.views))
-            if genre:
-                #query = query.where(genre in cls.genres)
-                query = query.join(cls.genres).where(Genre.name == genre)
+
+        query = select(cls).order_by(desc(cls.views))
+        if genre:
+            #query = query.where(genre in cls.genres)
+            query = query.join(cls.genres).where(Genre.name == genre)
+        if session:
             films = session.execute(query).scalars().all()
+        else:
+            with cls.session() as session:
+                films = session.execute(query).scalars().all()
         return films
     
     @classmethod
@@ -62,10 +69,20 @@ class Film(Base):
         with cls.session() as session:
             films = cls.get_films(session=session)
             for film in films:
-                if txt in film.title:
+                if txt.lower() in film.title.lower():
                     film_list.append(film)
             film_list.sort(key=lambda x: x.views, reverse=True)
         return [film.title for film in film_list[:5]]
+    
+    @classmethod
+    def search_result(cls, txt, session):
+        film_list = []
+        films = cls.get_films(session=session)
+        for film in films:
+            if txt in film.title:
+                film_list.append(film)
+        film_list.sort(key=lambda x: x.views, reverse=True)
+        return [film for film in film_list[:9]]
 
     
     

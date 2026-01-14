@@ -36,20 +36,20 @@ class User(Base):
         genres = defaultdict(int)
         for film in self.films[:10]:
             for genre in film.genres:
-                genres[genre.id] += 1
+                genres[genre.name] += 1
         touple_list = sorted(genres.items(), key=lambda x: x[1], reverse=True)[:3]
         return [genre[0] for genre in touple_list]
     
-    def get_recommended_films(self):
+    def get_recommended_films(self, session):
         from .film import Film
         film_list = []
         added_ids = set()
         genres = self.get_recent_genres() * 6
         for genre in genres[:6]:
-            top_genre_films = Film.get_most_popular_films(genre=genre)
+            top_genre_films = Film.get_most_popular_films(session=session, genre=genre)
             for film in top_genre_films:
-                if film.id not in added_ids:
+                if film not in added_ids:
                     film_list.append(film)
-                    added_ids.add(film.id)
+                    added_ids.add(film)
                     break
         return film_list
