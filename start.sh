@@ -12,7 +12,7 @@ if docker ps -a --format "{{.Names}}" | grep -iq "$FLASK_CONTAINER"; then
     docker start -ai "$FLASK_CONTAINER"
 else
     echo "Creazione e avvio container Flask in shell mode..."
-    docker run --rm --name "$FLASK_CONTAINER" -it -p 5000:5000 \
+    docker run --rm --name "$FLASK_CONTAINER" --network streaming-net -it -p 5000:5000 \
         -v "$(pwd)/webServer/flaskr:/app" -w /app "$FLASK_IMAGE" bash
 fi
 

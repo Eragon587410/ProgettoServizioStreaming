@@ -8,7 +8,7 @@ from flask import (
 
 bp = Blueprint('streaming', __name__, url_prefix='/streaming')
 
-HLS_ADDRESS = "http://host.docker.internal:8080/hls/"
+HLS_ADDRESS = "http://root:root@hls-server:80/hls/"
 finito = False
 
 #bp.route("/stream")
